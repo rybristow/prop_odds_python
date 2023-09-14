@@ -5,8 +5,6 @@ from datetime import datetime
 BASE_URL = 'https://api.prop-odds.com'
 API_KEY = '{MY_API_KEY}'
 
-def abc():
-    pass
 
 def get_request(url):
     response = requests.get(url)
