@@ -15,33 +15,15 @@ def get_request(url):
     return {}
 
 
-def get_nba_games():
+def get_races():
     now = datetime.now()
     query_params = {
         'date': now.strftime('%Y-%m-%d'),
-        'tz': 'America/New_York',
+        'tz': 'Europe/London',
         'api_key': API_KEY,
     }
     params = urllib.parse.urlencode(query_params)
-    url = BASE_URL + '/beta/games/nba?' + params
-    return get_request(url)
-
-
-def get_game_info(game_id):
-    query_params = {
-        'api_key': API_KEY,
-    }
-    params = urllib.parse.urlencode(query_params)
-    url = BASE_URL + '/beta/game/' + game_id + '?' + params
-    return get_request(url)
-
-
-def get_markets(game_id):
-    query_params = {
-        'api_key': API_KEY,
-    }
-    params = urllib.parse.urlencode(query_params)
-    url = BASE_URL + '/beta/markets/' + game_id + '?' + params
+    url = BASE_URL + '/beta/race/races' + params
     return get_request(url)
 
 
@@ -55,6 +37,10 @@ def get_most_recent_odds(game_id, market):
 
 
 def main():
+    races = get_races()
+    for race in races:
+        print(race)
+    '''
     games = get_nba_games()
     if len(games['games']) == 0:
         print('No games scheduled for today.')
@@ -76,6 +62,7 @@ def main():
     # print(first_market)
     odds = get_most_recent_odds(game_id, first_market['name'])
     print(odds)
+    '''
 
 
 if __name__ == '__main__':
