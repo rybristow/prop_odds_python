@@ -3,7 +3,7 @@ import urllib
 from datetime import datetime
 
 BASE_URL = 'https://api.prop-odds.com'
-API_KEY = '{MY_API_KEY}'
+API_KEY = '<INSERT_API_KEY_HERE>'
 
 
 def get_request(url):
@@ -15,7 +15,7 @@ def get_request(url):
     return {}
 
 
-def get_nba_games():
+def get_games(league):
     now = datetime.now()
     query_params = {
         'date': now.strftime('%Y-%m-%d'),
@@ -23,7 +23,7 @@ def get_nba_games():
         'api_key': API_KEY,
     }
     params = urllib.parse.urlencode(query_params)
-    url = BASE_URL + '/beta/games/nba?' + params
+    url = BASE_URL + '/beta/games/' + league + '?' + params
     return get_request(url)
 
 
@@ -55,7 +55,7 @@ def get_most_recent_odds(game_id, market):
 
 
 def main():
-    games = get_nba_games()
+    games = get_games('nba')
     if len(games['games']) == 0:
         print('No games scheduled for today.')
         return
@@ -65,7 +65,7 @@ def main():
     # print(first_game)
     game_info = get_game_info(game_id)
     # print(game_info)
-    
+
     markets = get_markets(game_id)
     # print(markets)
     if len(markets['markets']) == 0:
@@ -80,4 +80,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
